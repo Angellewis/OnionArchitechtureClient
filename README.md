@@ -1,4 +1,4 @@
-# workshop-client
+# workshops-client
 
 ## Project setup
 ```
