@@ -1,4 +1,6 @@
-export default class BTableConfigPagination {
+import { Base } from "@/core/model/base.model";
+
+export default class BTableConfigPagination<T extends Base> {
     public backend: boolean;
     public simple: boolean;
     public total: number;
@@ -21,7 +23,7 @@ export default class BTableConfigPagination {
         this.quantityOptions = [5,10,20,50,100]
     }
     public change?: (page: number) => void;
-    public onChanged?: (data: any[]) => void;
+    public onChanged?: (data: T[]) => void;
 }
 
 export class BTableConfigPaginationLabel {

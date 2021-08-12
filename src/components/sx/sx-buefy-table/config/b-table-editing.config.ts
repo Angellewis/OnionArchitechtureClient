@@ -1,7 +1,7 @@
-import { IBaseEntity } from '@/core/abstract/base';
+import { Base, BaseEntity } from '@/core/model/base.model';
 import { RowTable } from '@/core/typings/b-row-table';
 
-export default class BTableConfigEditing<T>  {
+export default class BTableConfigEditing<T extends Base>  {
     public routeTo: string;
     public icon: string;
     public outlined: boolean;
@@ -22,9 +22,9 @@ export default class BTableConfigEditing<T>  {
     };
 }
 
-export class BTableConfigEditingModal<T> {
+export class BTableConfigEditingModal<T extends Base> {
     public modelId:number;
-    public model: T | IBaseEntity;
+    public model: T | Base;
     public title: string;
     public active: boolean;
     public saving: boolean;
@@ -37,7 +37,7 @@ export class BTableConfigEditingModal<T> {
     public btnAddText: string;
 
     constructor() {
-        this.model = {} as IBaseEntity;
+        this.model = new BaseEntity();
         this.modelId = 0;
         this.title = 'Editar';
         this.active = false;

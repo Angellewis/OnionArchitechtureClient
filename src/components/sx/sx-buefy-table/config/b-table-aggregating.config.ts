@@ -1,7 +1,6 @@
-import { IBaseEntity } from "@/core/abstract/base";
-import { BaseEntity } from "@/core/models/base";
+import { Base, BaseEntity } from "@/core/model/base.model";
 
-export default class BTableConfigAggregating<T> {
+export default class BTableConfigAggregating<T extends Base> {
     public title: string;
     public icon: string;
     public btnText: string;
@@ -24,8 +23,8 @@ export default class BTableConfigAggregating<T> {
     public add?(): void;
 }
 
-export class BTableConfigAggregatingModal<T> {
-    public model: T | IBaseEntity;
+export class BTableConfigAggregatingModal<T extends Base> {
+    public model: T | Base;
     public title: string;
     public active: boolean;
     public fullScreen: boolean;

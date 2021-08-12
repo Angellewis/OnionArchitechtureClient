@@ -1,6 +1,6 @@
 import { BTableColumnType } from '@/core/utils/enums';
 
-export default class BTableColumn {
+export class BTableColumn {
     public width?: string;
     public visible?: boolean;
     public numeric?: boolean;
@@ -18,5 +18,20 @@ export default class BTableColumn {
         this.label = this.label || this.field;     
         this.visible = true;
     }
-    public customFilter!: (value:string)=> void;
+    public customFilter!: (value:any)=> string;
 }
+
+export default class BTableConfigColumnAction {
+    public active: boolean;
+    public customTemplate: boolean;
+    public props: BTableColumn;
+    
+    constructor() {
+        this.active = true;
+        this.customTemplate = false;
+        this.props = new BTableColumn('btn-action', 'Acciones');
+        this.props.sortable = false;
+        this.props.centered = true;
+    }
+}
+

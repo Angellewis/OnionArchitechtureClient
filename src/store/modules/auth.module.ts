@@ -1,5 +1,5 @@
 
-import { IUser } from "@/core/abstract";
+import { IUser } from "@/core/model";
 import { UserRole } from "@/core/utils/enums";
 import { Module } from "vuex";
 

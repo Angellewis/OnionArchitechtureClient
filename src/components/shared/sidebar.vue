@@ -34,9 +34,14 @@
               :to="{ path: '/workshops' }"
             >
             </b-menu-item>
-            <b-menu-item v-if="isCurrentUserAdmin" expanded icon="security" label="Administrator">
+            <b-menu-item
+              v-if="isCurrentUserAdmin"
+              expanded
+              icon="security"
+              label="Administrator"
+            >
               <b-menu-item
-              id="das"
+                id="das"
                 icon="account-multiple"
                 label="Users"
                 tag="router-link"
@@ -71,8 +76,7 @@
 import { Component, Mixins, Prop, Vue } from "vue-property-decorator";
 import { AuthMixin, SidebarMixin } from "@/mixins";
 @Component
-export default class Sidebar extends Mixins(SidebarMixin, AuthMixin) {
-}
+export default class Sidebar extends Mixins(SidebarMixin, AuthMixin) {}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -80,5 +84,4 @@ export default class Sidebar extends Mixins(SidebarMixin, AuthMixin) {
 .p-1 {
   padding: 1em !important;
 }
-
 </style>

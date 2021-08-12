@@ -67,93 +67,94 @@
       @dblclick="dblclick"
       @contextmenu="rightClick"
     >
-      <template slot-scope="props">
-        <b-table-column
-          v-for="(column, index) in config.columns"
-          :key="index"
-          :field="column.field"
-          :label="column.label"
-          :visible="column.visible"
-          :width="column.width"
-          :numeric="column.numeric"
-          :centered="column.centered"
-          :sortable="column.sortable"
-          :customKey="column.customKey"
-          :customSort="column.customSort"
-          :meta="column.meta"
-        >
-          <slot
-            v-if="column.customTemplate"
-            :name="column.templateSlot || column.field"
-            v-bind:row="props.row"
-          ></slot>
-          <span v-else>
-            <b-tooltip
-              type="is-primary"
-              v-if="column.type === 2"
-              :label="getValueTime(props.row, column.field)"
-            >
-              <b-tag rounded type="is-light">{{
-                getFieldValue(props.row, column.field) | date
-              }}</b-tag>
-            </b-tooltip>
-            <b-tooltip
-              v-else-if="column.type === 3"
-              :label="getValueDate(props.row, column.field)"
-            >
-              <b-tag rounded type="is-light">{{
-                getFieldValue(props.row, column.field) | time
-              }}</b-tag>
-            </b-tooltip>
-            <span v-else>{{
-              getFieldValue(props.row, column.field)
-                | bTableColumnValue(column, props)
-            }}</span>
-          </span>
-        </b-table-column>
-
-        <b-table-column
-          v-if="config.actions.active"
-          :field="config.actions.props.field"
-          :label="config.actions.props.label"
-          :visible="config.actions.props.visible"
-          :width="config.actions.props.width"
-          :numeric="config.actions.props.numeric"
-          :centered="config.actions.props.centered"
-          :sortable="config.actions.props.sortable"
-          :customKey="config.actions.props.customKey"
-          :customSort="config.actions.props.customSort"
-          :meta="config.actions.props.meta"
-        >
-          <slot
-            v-if="config.actions.customTemplate"
-            name="actions"
-            v-bind:row="props.row"
-          ></slot>
-          <div
-            v-else
-            class="buttons"
-            :class="{ 'is-centered': config.actions.props.centered }"
+      <b-table-column
+        v-for="(column, index) in config.columns"
+        :key="index"
+        :field="column.field"
+        :label="column.label"
+        :visible="column.visible"
+        :width="column.width"
+        :numeric="column.numeric"
+        :centered="column.centered"
+        :sortable="column.sortable"
+        :customKey="column.customKey"
+        :customSort="column.customSort"
+        :meta="column.meta"
+        v-slot="props"
+      >
+        <slot
+          v-if="column.customTemplate"
+          :name="column.templateSlot || column.field"
+          :row="props.row"
+          :index="index"
+          :column="column"
+        ></slot>
+        <span v-else>
+          <b-tooltip
+            type="is-primary"
+            v-if="column.type === 2"
+            :label="getValueTime(props.row, column.field)"
           >
-            <b-button
-              v-show="config.editable"
-              @click="edit(props.row.id, props.row, props)"
-              :disabled="!config.editing.isEditableRow(props.row)"
-              :outlined="config.editing.outlined"
-              :type="config.editing.type"
-              :icon-right="config.editing.icon"
-            />
-            <b-button
-              v-show="config.removable"
-              :disabled="!config.removing.isRemovableRow(props.row)"
-              @click="remove(props.row.id, props.row, props)"
-              :outlined="config.removing.outlined"
-              :type="config.removing.type"
-              :icon-right="config.removing.icon"
-            />
-          </div>
-        </b-table-column>
-      </template>
+            <b-tag rounded type="is-light">{{
+              getFieldValue(props.row, column.field) | date
+            }}</b-tag>
+          </b-tooltip>
+          <b-tooltip
+            v-else-if="column.type === 3"
+            :label="getValueDate(props.row, column.field)"
+          >
+            <b-tag rounded type="is-light">{{
+              getFieldValue(props.row, column.field) | time
+            }}</b-tag>
+          </b-tooltip>
+          <span v-else>{{
+            getFieldValue(props.row, column.field)
+              | bTableColumnValue(column, props)
+          }}</span>
+        </span>
+      </b-table-column>
+      <b-table-column
+        v-if="config.actions.active"
+        :field="config.actions.props.field"
+        :label="config.actions.props.label"
+        :visible="config.actions.props.visible"
+        :width="config.actions.props.width"
+        :numeric="config.actions.props.numeric"
+        :centered="config.actions.props.centered"
+        :sortable="config.actions.props.sortable"
+        :customKey="config.actions.props.customKey"
+        :customSort="config.actions.props.customSort"
+        :meta="config.actions.props.meta"
+        v-slot="props"
+      >
+        <slot
+          v-if="config.actions.customTemplate"
+          name="actions"
+          :row="props.row"
+        ></slot>
+        <div
+          v-else
+          class="buttons"
+          :class="{ 'is-centered': config.actions.props.centered }"
+        >
+          <b-button
+            v-show="config.editable"
+            @click="edit(props.row.id, props.row, props)"
+            :disabled="!config.editing.isEditableRow(props.row)"
+            :outlined="config.editing.outlined"
+            :type="config.editing.type"
+            :icon-right="config.editing.icon"
+          />
+          <b-button
+            v-show="config.removable"
+            :disabled="!config.removing.isRemovableRow(props.row)"
+            @click="remove(props.row.id, props.row, props)"
+            :outlined="config.removing.outlined"
+            :type="config.removing.type"
+            :icon-right="config.removing.icon"
+          />
+        </div>
+      </b-table-column>
       <template slot="empty">
         <section v-if="!config.customEmptyTemplate" class="section">
           <div class="content has-text-grey-light has-text-centered">
@@ -164,7 +165,7 @@
             <hr v-show="config.showReload" />
             <b-button
               v-show="config.showReload"
-              @click="getData"
+              @click="config.getData"
               type="is-primary"
               icon-left="reload"
               outlined
@@ -176,10 +177,7 @@
         <slot v-else name="empty"></slot>
       </template>
       <template slot="bottom-left">
-        <section
-          v-if="!config.customButtomLeftTemplate"
-          class="section"
-        >
+        <section v-if="!config.customButtomLeftTemplate">
           <div class="content has-text-grey-light">
             <div class="field is-horizontal">
               <div class="field-body">
@@ -216,8 +214,8 @@
         </section>
         <slot v-else name="bottom-left"></slot>
       </template>
-      <template slot="detail" slot-scope="props">
-        <slot name="detail" v-bind:props="props.row"></slot>
+      <template #detail="props">
+        <slot name="detail" :row="props.row"></slot>
       </template>
     </b-table>
 
@@ -292,42 +290,33 @@
 </template>
 
 <script lang='ts' >
-import { Component, Mixins, Prop } from "vue-property-decorator";
-import { IBaseEntity } from "@/core/abstract/base";
-import { BaseEntity } from "@/core/models/base";
-import { Watch } from "vue-property-decorator";
-import BTableColumn from "@/core/models/b-table-column.model";
-import BTableConfig, {
-  BTableConfigPagination,
-} from "@/core/config/b-table-config";
-import { BTableColumnType, ODataConst } from "@/core/utils/enums";
-import { CoreMixin } from "@/mixins";
-import {
-  ODataQueryOption,
-} from "@/core/models/odata-query-option.model";
 import Helpers from "@/core/utils/helpers";
+import { Component, Mixins, Prop } from "vue-property-decorator";
+import { Watch } from "vue-property-decorator";
+import { BTableColumnType } from "@/core/utils/enums";
+import { CoreMixin } from "@/mixins";
 import { RowTable } from "@/core/typings/b-row-table";
+import { BaseEntity, IBase, IBaseEntity } from "@/core/model/base.model";
+import { BTableColumn, BTableConfig, BTableConfigPagination } from "./config";
 @Component({})
 export default class SxBuefyTableComponent extends Mixins(CoreMixin) {
   @Prop() public config!: BTableConfig<IBaseEntity>;
   public isEditing = false;
- 
+
   created() {
     if (this.config.enableDefaultColumns) this.insertDefaultColumns();
-
-    this.config.reload = this.getData;
   }
   mounted() {
     this.sortColumns();
 
-    if (this.config.loadOnMount) this.getData();
+    if (this.config.loadOnMount) this.config.getData();
   }
 
   get selectableColumn() {
     return this.config.selectable ? this.config.selection.selected : null;
   }
 
-  set selectableColumn(object: any) {
+  set selectableColumn(object: IBaseEntity | null) {
     this.config.selection.selected = object;
   }
 
@@ -335,34 +324,9 @@ export default class SxBuefyTableComponent extends Mixins(CoreMixin) {
     let fecha = new BTableColumn("createdDate", "Fecha");
     fecha.type = BTableColumnType.DateTime;
     fecha.order = 200;
-    let usuario = new BTableColumn("createdBy", "Usuario");
-    usuario.order = 201;
-    this.config.insertColumns(fecha, usuario);
+    this.config.insertColumns(fecha);
   }
-  async getData(callback?: (payload:any)=>void) {
-    this.config.loading = true;
-    const resource = this.config.resource || "";
-    const odataQuery = this.queryParams();
-    try {
-      const response = await this.config.apiService.odata(resource, odataQuery);
-      const value = response.data.value;
-      this.config.setRows(value);
 
-      if (this.config.pagination.backend)
-        this.config.pagination.total = response.data[ODataConst.count];
-
-      this.$emit("load-success", response.data, this.config);
-
-      if (callback) callback(response.data);
-
-      if (this.config.onLoad) this.config.onLoad(value);
-    } catch (error) {
-      this.$emit("load-error", error, this.config);
-    } finally {
-      this.config.loading = false;
-      this.$emit("load-finally", this.config);
-    }
-  }
   add() {
     this.$emit("add");
     if (this.config.aggregating.add) {
@@ -416,7 +380,7 @@ export default class SxBuefyTableComponent extends Mixins(CoreMixin) {
       await this.config.apiService.delete(id);
       this.$emit("removed", id, row, props);
       this.operationSuccess(this.config.removing.successText);
-      if (this.config.reload) this.config.reload();
+      this.config.getData();
     } catch (e) {
       this.operationFailed(e);
     }
@@ -521,41 +485,30 @@ export default class SxBuefyTableComponent extends Mixins(CoreMixin) {
       }
     );
   }
-  getValueTime(row: any, value: string) {
+  getValueTime(row: IBase, value: string) {
     let val = this.getFieldValue(row, value);
     return Helpers.Filters.Time(val);
   }
-  getValueDate(row: any, value: string) {
+  getValueDate(row: IBase, value: string) {
     let val = this.getFieldValue(row, value);
     return Helpers.Filters.Date(val);
   }
-  getFieldValue(row: any, field: string) {
+  getFieldValue(row: IBase, field: string) {
     return Helpers.GetValueFromPath(row, field);
   }
-  queryParams(): ODataQueryOption {
-    let instace = new ODataQueryOption();
-    instace.$orderby =  this.config.sorting.field.concat((this.config.sorting.order === "desc" ? " desc" : " "))
 
-    instace.$top = this.config.pagination.perPage;
-    instace.$filter = this.config.whereParams;
-    instace.$expand = this.config.include;
-
-    if (!instace.$filter) delete instace.$filter;
-    if (!instace.$expand) delete instace.$expand;
-    return instace;
-  }
   //  WATCHES
   @Watch("config.columns", { deep: true })
-  onColumnsChange(columns: any[]) {
+  onColumnsChange(columns: IBaseEntity[]) {
     this.$emit("columns-change", columns);
   }
   @Watch("config.data", { deep: true })
-  onRowsChange(data: any[]) {
+  onRowsChange(data: IBaseEntity[]) {
     this.$emit("rows-change", data);
   }
   @Watch("config.pagination", { deep: true })
-  onPaginationChange(value: BTableConfigPagination) {
-    if (value.perPage) this.getData();
+  onPaginationChange(value: BTableConfigPagination<IBaseEntity>) {
+    this.$emit("page-change", value);
   }
   //  SELECTION
   select(row: IBaseEntity, oldRow: IBaseEntity) {
@@ -586,7 +539,7 @@ export default class SxBuefyTableComponent extends Mixins(CoreMixin) {
       this.$emit("page-change", page);
       this.config.pagination.currentPage = page;
       if (this.config.paginated && this.config.pagination.backend)
-        this.getData(this.config.pagination.onChanged);
+        this.config.getData(this.config.pagination.onChanged);
     } else {
       this.config.pagination.change(page);
       if (this.config.pagination.onChanged)
@@ -600,7 +553,7 @@ export default class SxBuefyTableComponent extends Mixins(CoreMixin) {
       this.config.sorting.order = order;
       this.$emit("sort", field, order);
 
-      if (this.config.sorting.backend) this.getData();
+      if (this.config.sorting.backend) this.config.getData();
     } else this.config.sorting.change(field, order);
   }
   //  CHECKING

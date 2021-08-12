@@ -1,7 +1,22 @@
+import { BTableColumn } from "@/components/sx/sx-buefy-table/config";
 import moment from "moment";
-import { BTableColumn } from "../models";
-import { BTableColumnType } from "./enums";
+import { BTableColumnType, DocumentType, UserRole } from "./enums";
 export default class Helpers {
+  static MonthNames = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+  static DayNames = ["D", "L", "M", "MI", "J", "V", "S"];
   static Filters = {
     Empty: "",
     EmptyText() {
@@ -41,6 +56,12 @@ export default class Helpers {
         return result;
       }
       return tel;
+    },
+    UserRole(val: UserRole) {
+      return val === UserRole.ADMIN ? 'Administrador':'Usuario';
+    },
+    DocumentType(val: DocumentType) {
+      return val === DocumentType.ID ? 'Cédula':'Pasaporte';
     },
     Date(value: string, format = "L") {
       if (!value) return this.Empty;
@@ -101,8 +122,7 @@ export default class Helpers {
 
       return dig == parseInt(value.charAt(10));
     },
-
-    validarCedula(cedula: string) {
+    ValidateCedula(cedula: string) {
       const numerosProcesados: number[] = []
       const numerosIgnorados: number[] = []
       cedula = cedula.trim();
@@ -136,7 +156,7 @@ export default class Helpers {
         }
       }
 
-      const sumatoriaProceso = numerosIgnorados.reduce((a:number,b:number) => a + b, 0) + numerosProcesados.reduce((a:number,b:number) => a + b, 0);
+      const sumatoriaProceso = numerosIgnorados.reduce((a: number, b: number) => a + b, 0) + numerosProcesados.reduce((a: number, b: number) => a + b, 0);
 
       let contador = 10;
       while (contador < sumatoriaProceso) {
@@ -150,7 +170,6 @@ export default class Helpers {
       return esValida;
 
     }
-
   };
   static MapToObject<T>(
     fromObject: any,
@@ -220,37 +239,23 @@ export default class Helpers {
     });
     return uuid;
   }
-  static MonthNames = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
-  static DayNames = ["D", "L", "M", "MI", "J", "V", "S"];
+
   static ToBTableColumnValue(value: string, column: BTableColumn) {
     if (value === undefined || value === null || value === '')
-        return Helpers.Filters.Empty;
+      return Helpers.Filters.Empty;
 
     if (column.type === BTableColumnType.Date)
-        return Helpers.Filters.Date(value);
+      return Helpers.Filters.Date(value);
 
     if (column.type === BTableColumnType.Time)
-        return Helpers.Filters.Time(value);
+      return Helpers.Filters.Time(value);
 
     if (column.type === BTableColumnType.Bool)
-        return Helpers.Filters.Boolean(value);
+      return Helpers.Filters.Boolean(value);
 
     if (column.type === BTableColumnType.Custom)
-        return column.customFilter ? column.customFilter(value) : value;
+      return column.customFilter ? column.customFilter(value) : value;
 
     return value;
-}
+  }
 }

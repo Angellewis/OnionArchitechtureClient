@@ -8,7 +8,9 @@ import BTableConfigAggregating from './b-table-aggregating.config';
 import BTableConfigEditing from './b-table-editing.config';
 import BTableConfigRemoving from './b-table-removing.config';
 import BTableConfig from './b-table.config';
-export {
+import BTableConfigColumnAction, { BTableColumn } from './b-table-column.config';
+
+export  {
     BTableConfig,
     BTableConfigChecking,
     BTableConfigDetailing,
@@ -16,9 +18,9 @@ export {
     BTableConfigSorting,
     BTableConfigStyle,
     BTableConfigSelection,
+    BTableColumn,
+    BTableConfigColumnAction,
     BTableConfigAggregating,
     BTableConfigEditing,
     BTableConfigRemoving
 }
-
-export default BTableConfig;

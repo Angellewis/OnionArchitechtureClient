@@ -1,33 +1,38 @@
 <template>
   <div id="app">
-    <navbar />
     <sidebar />
-    <div class="main-content">
-      <router-view />
+    <div
+      class="main-content"
+      :class="{
+        'main-content-on-sidebar-reduced': isSidebarReduced,
+        'main-content-on-sidebar-not-reduced': !isSidebarReduced,
+      }"
+    >
+      <navbar />
+      <div class="section">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
 
+<script lang="ts">
+import { Component, Mixins, Vue, Watch } from "vue-property-decorator";
+import { SidebarMixin } from "./mixins";
+
+@Component
+export default class App extends Mixins(SidebarMixin) {}
+</script>
 <style lang="scss" >
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.main-content {
+  position: absolute;
+  right: 0;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.main-content-on-sidebar-not-reduced {
+  width: calc(100% - 260px);
+}
+.main-content-on-sidebar-reduced {
+  width: calc(100% - 90px);
 }
 .sidebar-reduced .menu-list li a span:last-child {
   display: none !important;

@@ -1,7 +1,8 @@
 import { Gender, UserRole } from "@/core/utils/enums";
-import { IBaseEntity } from "./base";
+import { IBaseEntity } from "./base.model";
 
-export interface IUser extends IBaseEntity {
+export default interface IUser extends IBaseEntity {
+    fullName: string;
     name: string;
     middleName: string;
     lastName: string;

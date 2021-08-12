@@ -1,12 +1,12 @@
-import BTableConfig from '@/core/config/b-table-config';
+import { BTableConfig } from '@/components/sx/sx-buefy-table/config';
+import { Base } from '@/core/model/base.model';
 import { RowTable } from '@/core/typings/b-row-table';
 import { Component, Mixins, Vue } from 'vue-property-decorator';
 import { CoreMixin } from './core.mixin';
 @Component
-export class SxBuefyTableMixin<T> extends Mixins(CoreMixin) {
+export class SxBuefyTableMixin<T extends Base> extends Mixins(CoreMixin) {
     protected tableConfig = new BTableConfig<T>();
     created() {
-        this.tableConfig = new BTableConfig<T>();
         this.tableConfig.editing.edit = this.edit;
         this.tableConfig.removing.remove = this.remove;
     }
@@ -40,9 +40,7 @@ export class SxBuefyTableMixin<T> extends Mixins(CoreMixin) {
         try {
             await this.tableConfig.apiService.delete(id);
             this.operationSuccess('Registro eliminado!');
-            if (this.tableConfig.reload)
-                this.tableConfig.reload();
-
+            this.tableConfig.getData();
             this.$emit('remove', id, data, props);
         } catch (e) {
             this.operationFailed(e);
