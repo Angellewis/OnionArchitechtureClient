@@ -16,12 +16,12 @@
     </template>
     <template #end>
       <b-navbar-dropdown position="is-bottom-left" :label="currentUser.name">
-        <b-navbar-item href="#"> Profile </b-navbar-item>
-        <b-navbar-item href="#"> My workshops </b-navbar-item>
+        <b-navbar-item href="#"> Perfíl </b-navbar-item>
+        <b-navbar-item href="#"> Mis talleres </b-navbar-item>
       </b-navbar-dropdown>
       <b-navbar-item tag="div">
         <div class="buttons">
-          <a @click="logout" class="button is-light"> Log out </a>
+          <a @click="logout" class="button is-light"> Salir </a>
         </div>
       </b-navbar-item>
     </template>

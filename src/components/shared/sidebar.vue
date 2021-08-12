@@ -21,15 +21,15 @@
           <b-menu-list label="Menu">
             <b-menu-item
               active
-              icon="information-outline"
-              label="Home"
+              icon="home"
+              label="Inicio"
               tag="router-link"
               :to="{ path: '/' }"
             >
             </b-menu-item>
             <b-menu-item
-              icon="view-list"
-              label="My workshops"
+              icon="certificate"
+              label="Mis talleres"
               tag="router-link"
               :to="{ path: '/workshops' }"
             >
@@ -38,32 +38,31 @@
               v-if="isCurrentUserAdmin"
               expanded
               icon="security"
-              label="Administrator"
+              label="Administración"
             >
               <b-menu-item
-                id="das"
                 icon="account-multiple"
-                label="Users"
+                label="Usuarios"
                 tag="router-link"
                 :to="{ path: '/admin/users' }"
               ></b-menu-item>
               <b-menu-item
-                icon="view-list"
-                label="Workshops"
+                icon="cogs"
+                label="Talleres"
                 tag="router-link"
                 :to="{ path: '/admin/workshops' }"
               ></b-menu-item>
             </b-menu-item>
             <b-menu-item
               icon="account"
-              label="My profile"
+              label="Mi perfíl"
               tag="router-link"
               :to="{ path: '/profile' }"
             >
             </b-menu-item>
           </b-menu-list>
-          <b-menu-list label="Actions">
-            <b-menu-item icon="logout" label="Logout"></b-menu-item>
+          <b-menu-list label="Acciones">
+            <b-menu-item icon="logout" label="Salir"></b-menu-item>
           </b-menu-list>
         </b-menu>
       </div>

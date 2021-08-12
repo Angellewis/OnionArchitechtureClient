@@ -37,4 +37,18 @@ export default class App extends Mixins(SidebarMixin) {}
 .sidebar-reduced .menu-list li a span:last-child {
   display: none !important;
 }
+.icon-image-rounded {
+    height: 40px;
+    align-items: center;
+    width: 40px;
+    color: white;
+    font-size: 20px;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    border-radius: 100px;
+}
+.cursor-ban{
+  cursor:not-allowed;
+}
 </style>

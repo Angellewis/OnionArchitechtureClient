@@ -16,4 +16,5 @@ export default interface IUser extends IBaseEntity {
     userName: string;
     password: string;
     userRole: UserRole;
+    signature:string;
 }
