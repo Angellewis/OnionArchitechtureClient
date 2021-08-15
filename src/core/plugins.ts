@@ -14,3 +14,7 @@ import VeeValidate, { Validator } from 'vee-validate';
 Vue.use(VeeValidate);
 // Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('es', es);
+
+
+import VueTheMask from "vue-the-mask";
+Vue.use(VueTheMask);

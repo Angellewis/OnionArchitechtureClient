@@ -1,6 +1,7 @@
 <template>
   <div>
     <sx-buefy-table :config="tableConfig">
+
       <template v-slot:fullName="{ row }">
         <div class="media">
           <div class="media-left">
@@ -16,6 +17,9 @@
           </div>
         </div>
       </template>
+
+
+
       <template v-slot:documentType="{ row }">
         <p class="title is-6">
           {{ row.documentTypeValue | documentTypeValue(row.documentType) }}
@@ -28,14 +32,14 @@
 <script lang="ts">
 import { Component, Mixins } from "vue-property-decorator";
 import { SxBuefyTableMixin } from "@/mixins";
-import { IUser } from "@/core/model";
 import { BTableColumn } from "@/components/sx/sx-buefy-table/config";
 import Helpers from "@/core/utils/helpers";
 import { BTableColumnType, UserRole } from "@/core/utils/enums";
+import { User } from "@/core/model";
 
 @Component
-export default class UserTableComponent extends Mixins<
-  SxBuefyTableMixin<IUser>
+export default class UserListComponent extends Mixins<
+  SxBuefyTableMixin<User>
 >(SxBuefyTableMixin) {
   created() {
     this.setTableConfig();
@@ -44,20 +48,21 @@ export default class UserTableComponent extends Mixins<
   setTableConfig() {
     this.tableConfig.controller = "User";
     this.tableConfig.aggregatable = true;
-    this.tableConfig.aggregating.title = "Usuarios";
+    this.tableConfig.aggregating.title = "Listado de usuarios";
   }
   formatColumns() {
-    let id = new BTableColumn("id", "ID");
     let fullName = new BTableColumn("fullName", "Usuario");
     fullName.sortable = false;
     fullName.customTemplate = true;
+
     let documentType = new BTableColumn("documentType", "Identificación");
     documentType.customTemplate = true;
+
     let role = new BTableColumn("userRole", "Rol");
     role.type = BTableColumnType.Custom;
     role.customFilter = (value: UserRole) => Helpers.Filters.UserRole(value);
 
-    this.tableConfig.insertColumns(id,fullName, documentType, role);
+    this.tableConfig.insertColumns(fullName, documentType, role);
   }
 }
 </script>

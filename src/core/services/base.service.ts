@@ -1,14 +1,15 @@
 import axios, { AxiosResponse } from "axios";
 import settings from "@/core/utils/app-settings";
-import { IODataResult, BaseODataQuery, ODataQuery, IODataQuery, IBaseODataQuery, IApiQueryResult } from "../infraestructure/odata";
+import { IODataResult, ODataQuery, IODataQuery, IApiQueryResult } from "../infraestructure/odata";
+import { IEntityOperationResult } from "../infraestructure/abstract";
 
 export interface IBaseService<T>{
     odata(action?:string,queryOption?: IODataQuery): Promise<AxiosResponse<IODataResult<T>>>;
     getAll(action:string,queryOption?: IODataQuery): Promise<AxiosResponse<IApiQueryResult<T>>>;
     getById(id: string | number): Promise<AxiosResponse<T>>;
-    delete(id: string | number): Promise<AxiosResponse<T>>
-    post(data: T): Promise<AxiosResponse<T>>;
-    put(id: string | number, data: T): Promise<AxiosResponse<T>>
+    delete(id: string | number): Promise<AxiosResponse<IEntityOperationResult<T>>>
+    post(data: T): Promise<AxiosResponse<IEntityOperationResult<T>>>;
+    put(id: string | number, data: T): Promise<AxiosResponse<IEntityOperationResult<T>>>
 }
 export class BaseService<T> implements IBaseService<T> {
     public apiUrl: string;
@@ -49,17 +50,17 @@ export class BaseService<T> implements IBaseService<T> {
     }
 
     public async delete(id: string | number){
-        const response = await axios.delete<T>(this.apiUrl + id);
+        const response = await axios.delete<IEntityOperationResult<T>>(this.apiUrl + id);
         return response;
     }
 
     public async post(data: T) {
-        const response = await axios.post<T>(this.apiUrl, data);
+        const response = await axios.post<IEntityOperationResult<T>>(this.apiUrl, data);
         return response;
     }
 
     public async put(id: string | number, data: T){
-        const response = await axios.put<T>(this.apiUrl + id, data);
+        const response = await axios.put<IEntityOperationResult<T>>(this.apiUrl + id, data);
         return response;
     }
 }

@@ -1,8 +1,11 @@
-import { IBaseEntity,IBase } from "./base.model";
-import IUser from "./user.model";
+import { IBase, IBaseEntity } from "./base.model";
+import {IDocument} from "./document.model";
+import { ChangePassword, User } from "./user.model";
 
 export {
     IBase,
     IBaseEntity,
-    IUser
+    IDocument,
+    User,
+    ChangePassword
 }

@@ -9,9 +9,7 @@
       }"
     >
       <navbar />
-      <div class="section">
-        <router-view />
-      </div>
+      <router-view />
     </div>
   </div>
 </template>
@@ -38,17 +36,26 @@ export default class App extends Mixins(SidebarMixin) {}
   display: none !important;
 }
 .icon-image-rounded {
-    height: 40px;
-    align-items: center;
-    width: 40px;
-    color: white;
-    font-size: 20px;
-    justify-content: center;
-    text-align: center;
-    display: flex;
-    border-radius: 100px;
+  height: 40px;
+  align-items: center;
+  width: 40px;
+  color: white;
+  font-size: 20px;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  border-radius: 100px;
 }
-.cursor-ban{
-  cursor:not-allowed;
+.cursor-ban {
+  cursor: not-allowed;
+}
+.relative{
+  position: relative !important;
+}
+
+.image-is-350x210 img{
+  max-width: 350px;
+  max-height: 210px;
+
 }
 </style>

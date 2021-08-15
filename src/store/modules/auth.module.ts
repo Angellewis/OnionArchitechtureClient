@@ -1,5 +1,5 @@
 
-import { IUser } from "@/core/model";
+import { User } from "@/core/model";
 import { UserRole } from "@/core/utils/enums";
 import { Module } from "vuex";
 
@@ -11,7 +11,7 @@ const authModule: Module<any, any> = {
             lastName: 'Jimenez',
             userName: 'admin',
             userRole: UserRole.ADMIN
-        } as IUser,
+        } as User,
     },
     getters: {
         isCurrentUserAdmin(state) {
