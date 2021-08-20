@@ -12,6 +12,26 @@ export enum Gender {
     FEMALE
 }
 
+export enum WorkShopMemberRole {
+    STUDENT,
+    TEACHER
+}
+
+export enum WeekDay {
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY
+}
+
+export enum WorkShopDayMode {
+    ON_SITE,
+    VIRTUAL
+}
+
 export enum BTableColumnType{
     Date = 0,
     Time = 1,

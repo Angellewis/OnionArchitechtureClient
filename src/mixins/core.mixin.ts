@@ -2,15 +2,17 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import Helpers from "@/core/utils/helpers";
 import moment from 'moment';
+import axios, { AxiosResponse } from "axios";
 
 @Component
 export class CoreMixin extends Vue {
-    created(){
+    public onError?: (erorr: any) => void;
+    created() {
         this.$validator.localize('es');
     }
     public yearSelected = 0;
     public get yearRange() {
-        return [-100,1000];
+        return [-100, 1000];
     }
     get meses() {
         return Helpers.MonthNames;
@@ -34,10 +36,10 @@ export class CoreMixin extends Vue {
     }
     operationSuccess(message: string = "Operación exitosa!", duration = 2000) {
         this.$buefy.toast.open({
-          message: message,
-          type: "is-success",
-          duration: duration,
-          position: "is-bottom-right"
+            message: message,
+            type: "is-success",
+            duration: duration,
+            position: "is-bottom-right"
         });
     }
 
@@ -91,5 +93,17 @@ export class CoreMixin extends Vue {
         }
 
         return result;
+    }
+
+    getWorkShopData() {
+        return axios.get('https://localhost:44394/api/WorkShop/').then(response => response.data)
+    }
+
+    getUserData() {
+        return axios.get('https://localhost:44394/api/User/').then(response => response.data)
+    }
+
+    getMemberData() {
+        return axios.get('https://localhost:44394/api/WorkShopMember/').then(response => response.data)
     }
 }

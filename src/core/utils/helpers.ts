@@ -1,6 +1,6 @@
 import { BTableColumn } from "@/components/sx/sx-buefy-table/config";
 import moment from "moment";
-import { BTableColumnType, DocumentType, UserRole } from "./enums";
+import { BTableColumnType, DocumentType, UserRole, WorkShopMemberRole, WeekDay, WorkShopDayMode } from "./enums";
 export default class Helpers {
   static MonthNames = [
     "Enero",
@@ -58,16 +58,31 @@ export default class Helpers {
       return tel;
     },
     UserRole(val: UserRole) {
-      return val === UserRole.ADMIN ? 'Administrador':'Usuario';
+      return val === UserRole.ADMIN ? 'Administrador' : 'Usuario';
     },
     DocumentType(val: DocumentType) {
-      return val === DocumentType.ID ? 'Cédula':'Pasaporte';
+      return val === DocumentType.ID ? 'Cédula' : 'Pasaporte';
     },
-    Date(value: string, format = "L") {
+    WorkShopMemberRole(val: WorkShopMemberRole) {
+      return val === WorkShopMemberRole.TEACHER ? 'Maestro' : 'Estudiante';
+    },
+    WorkShopDayMode(val: WorkShopDayMode) {
+      return val === WorkShopDayMode.ON_SITE ? 'Presencial' : 'Virtual';
+    },
+    WorkShopDayday(val: WeekDay) {
+      if (val === WeekDay.MONDAY) { return 'Lunes' }
+      else if (val === WeekDay.TUESDAY) { return 'Martes' }
+      else if (val === WeekDay.WEDNESDAY) { return 'Miercoles' }
+      else if (val === WeekDay.THURSDAY) { return 'Jueves' }
+      else if (val === WeekDay.FRIDAY) { return 'Viernes' }
+      else if (val === WeekDay.SATURDAY) { return 'Sabado' }
+      else (val === WeekDay.SUNDAY);{return 'Domingo'}
+    },
+    Date(value: string | Date | null, format = "L") {
       if (!value) return this.Empty;
       return moment(value).format(format);
     },
-    Time(value: string, format = "LT") {
+    Time(value: string | Date | null | undefined, format = "LT") {
       if (!value) return this.Empty;
       return moment(value).format(format);
     },

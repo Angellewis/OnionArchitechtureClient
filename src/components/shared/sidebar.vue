@@ -47,11 +47,25 @@
                 :to="{ path: '/admin/users' }"
               ></b-menu-item>
               <b-menu-item
+                expanded
                 icon="cogs"
                 label="Talleres"
                 tag="router-link"
                 :to="{ path: '/admin/workshops' }"
-              ></b-menu-item>
+              >
+                <b-menu-item
+                  icon="account-group"
+                  label="Miembros"
+                  tag="router-link"
+                  :to="{ path: '/admin/workshopmembers' }"
+                ></b-menu-item>
+                <b-menu-item
+                  icon="calendar-today"
+                  label="Dias"
+                  tag="router-link"
+                  :to="{ path: '/admin/workshopdays' }"
+                ></b-menu-item>
+              </b-menu-item>
             </b-menu-item>
             <b-menu-item
               icon="account"

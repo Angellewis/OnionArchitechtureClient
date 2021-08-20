@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
 import User from './user.router'
+import WorkShops from './workshop.router'
+import WorkShopsMember from './workshopmember.router'
+import WorkShopDays from './workshopday.router'
 
 
 Vue.use(VueRouter)
@@ -20,7 +23,10 @@ const routes: Array<RouteConfig> = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
-  User
+  User,
+  WorkShops,
+  WorkShopsMember,
+  WorkShopDays
 ]
 
 const router = new VueRouter({
